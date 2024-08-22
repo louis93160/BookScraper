@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 import json
+from pymongo import MongoClient
 
 class AdditionalInfo(BaseModel):
     editeur: Optional[str] = None
@@ -29,9 +30,10 @@ class Book(BaseModel):
     additional_info: Optional[AdditionalInfo] = None
     customer_reviews: Optional[List[CustomerReview]] = []
 
-# Charger les données JSON avec encodage UTF-8
-with open("test_api.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+#Connexion à MongoDB
+client = MongoClient("mongodb://localhost:27017/")
+db = client["Books_database"]
+collection = db["Books"]
 
 app = FastAPI()
 

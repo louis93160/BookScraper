@@ -3,11 +3,11 @@ from pymongo import MongoClient
 
 #Connexion à MongoDB
 client = MongoClient("mongodb://localhost:27017/")
-db = client["nom_de_votre_base_de_donnees"]
-collection = db["nom_de_votre_collection"]
+db = client["Books_database"]
+collection = db["Books"]
 
 #Chemin vers le fichier JSON
-with open("chemin de mon fichier") as file:
+with open("/home/louis/BookScraper/data/books_modifier.json") as file:
     file_data = json.load(file)
 
 #Si le fichier contient une liste de documents
