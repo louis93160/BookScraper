@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-import json
 from pymongo import MongoClient
 
 class AdditionalInfo(BaseModel):
@@ -37,39 +36,34 @@ collection = db["Books"]
 
 app = FastAPI()
 
-#Route pour obtenir tous les livres
+# Endpoints pour obtenir tous les livres
 @app.get("/books", response_model=List[Book])
 def get_books():
-    return data
+    books = list(collection.find({}, {"_id": 0}))  # Récupère tous les documents en excluant l'ID MongoDB
+    if not books:
+        raise HTTPException(status_code=404, detail="No books found")
+    return books
 
+# Endpoints pour obtenir un livre par son titre
 @app.get("/books/{title}", response_model=Book)
 def get_book_by_title(title: str):
-    for book in data:
-        if book['title'].lower() == title.lower():
-            # Si 'additional_info' existe et est un dictionnaire, on le convertit en objet AdditionalInfo
-            if 'additional_info' in book and isinstance(book['additional_info'], dict):
-                book['additional_info'] = AdditionalInfo(**book['additional_info'])
-            return book
-    raise HTTPException(status_code=404, detail="Book not found")
+    book = collection.find_one({"title": title}, {"_id": 0})
+    if book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return book
 
+# Endpoints pour obtenir un livre par son ISBN10
 @app.get("/books/isbn10/{isbn10}", response_model=Book)
 def get_book_by_isbn10(isbn10: str):
-    for book_data in data:
-        additional_info = book_data.get('additional_info')
-        if additional_info and additional_info.get('isbn10') == isbn10:
-            book = Book(**book_data)
-            return book
-    raise HTTPException(status_code=404, detail="Book with ISBN-10 not found")
+    book = collection.find_one({"additional_info.isbn10": isbn10}, {"_id": 0})
+    if book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return book
 
+# Endpoints pour obtenir un livre par son ISBN13
 @app.get("/books/isbn13/{isbn13}", response_model=Book)
 def get_book_by_isbn13(isbn13: str):
-    for book_data in data:
-        additional_info = book_data.get('additional_info')
-        if additional_info and additional_info.get('isbn13') == isbn13:
-            book = Book(**book_data)
-            return book
-    raise HTTPException(status_code=404, detail="Book with ISBN-13 not found")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    book = collection.find_one({"additional_info.isbn13": isbn13}, {"_id": 0})
+    if book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return book

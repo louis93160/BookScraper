@@ -218,15 +218,6 @@ def main():
     # Fermer le driver Selenium
     driver.quit()
 
-end_time = time.time()
-elapsed_time = end_time - strat_time
-
-hours = int(elapsed_time // 3600)
-minutes = int((elapsed_time % 3600) // 60)
-seconds = elapsed_time % 60
-
-
-print(f"Le script a mis {hours} heures, {minutes} minutes et {seconds:.2f} secondes à s'exécuter.")
 
 # Exécution du script principal
 if __name__ == "__main__":
@@ -239,6 +230,5 @@ elapsed_time = end_time - strat_time
 hours = int(elapsed_time // 3600)
 minutes = int((elapsed_time % 3600) // 60)
 seconds = elapsed_time % 60
-
 
 print(f"Le script a mis {hours} heures, {minutes} minutes et {seconds:.2f} secondes à s'exécuter.")
