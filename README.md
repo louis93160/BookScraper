@@ -1,4 +1,4 @@
-<h2 align="center" style="font-size: 20px;">Une Solution de Web Scraping pour l'Amélioration des ventes en Ligne</h2>
+<h2 align="center" style="font-size: 20px;">Une Solution de Web Scraping pour l'Amélioration des Ventes en Ligne</h2>
 
 <div align="center" style="font-size: 22px;">Projet Data Engineering - Louis Duvieux</div>
 
