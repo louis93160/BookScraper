@@ -1,4 +1,4 @@
-<h2 align="center" style="font-size: 20px;">Une Solution de Web Scraping pour des Livres Amazon</h2>
+<h2 align="center" style="font-size: 20px;">Une Solution de Web Scraping pour l'Amélioration des ventes en Ligne</h2>
 
 <div align="center" style="font-size: 22px;">Projet Data Engineering - Louis Duvieux</div>
 
@@ -66,7 +66,6 @@ BookScraper/
 │   ├── books_load.py
 │   └── books_transformation.py
 └── Dockerfile
-
 </pre>
 
 ### Scripts Principaux
